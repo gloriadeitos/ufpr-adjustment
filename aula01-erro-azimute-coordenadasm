@@ -3,6 +3,9 @@
 % Glória Maria Deitos Gomes da Silva
 % 09.Maio.2025
 
+% Calcular o desvio padrão (erro propagado) do azimute entre dois pontos (A e B) a partir dos erros nas coordenadas dos pontos,
+% utilizando cálculo simbólico e a lei da propagação das variâncias.
+
 clc; clear all; format long g
 
 % Exercício: Determine o erro do Azimute A-B propagado a partir dos erros
