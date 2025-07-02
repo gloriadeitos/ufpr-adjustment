@@ -540,12 +540,3 @@ grid on;
 axis equal;
 
 hold off;
-
- 
-Gloria Maria Deitos Gomes da Silva
-meu ta dando:XP = 531.699 m ± 0.6187 m YP = 631.699 m ± 0.6187 m
-eu acho que esse daqui tem mais cara de certo
-mas nao faço ideia
- 
-to vendo o 2
- 
