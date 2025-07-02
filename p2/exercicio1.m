@@ -107,6 +107,15 @@ fprintf('(b) Sistema de Equações:\n');
 fprintf('2 equações (ângulos BÂP e PBA) e 2 incógnitas (XP, YP)\n');
 fprintf('Graus de liberdade = 0 (sistema determinado)\n\n');
 
+fprintf('(b) Sistema de Equações:\n');
+fprintf('Equação 1 (ângulo BÂP):\n');
+fprintf('alpha = atan((YP - YA) / (XP - XA)) - atan((YB - YA) / (XB - XA))\n\n');
+fprintf('Equação 2 (ângulo PBA):\n');
+fprintf('beta = atan((YP - YB) / (XP - XB)) - atan((YA - YB) / (XA - XB))\n\n');
+fprintf('2 incógnitas: XP e YP\n');
+fprintf('Grau de liberdade = 0 (sistema determinado)\n\n');
+
+
 %% c) Vetor de observações
 fprintf('(c) Vetor de observações (ângulos medidos em rad):\n');
 L = [alpha; beta];
@@ -164,4 +173,3 @@ title('Intersecção à Vante - Cálculo do Ponto P');
 grid on;
 axis equal;
 hold off;
-
