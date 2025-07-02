@@ -1,4 +1,4 @@
-% guro fez
+% glória fez
 
 % GA106 - Ajustamento I - Exercício 1 - Intersecção à Vante
 % Cálculo das coordenadas do ponto P e suas precisões
