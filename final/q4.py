@@ -3,12 +3,13 @@
 foram utilizados. Nestes pontos foram calculadas as anomalias de altura referenciadas ao DVBI e coletadas as anomalias de altura do modelo de QG. Com base nestes dados realize o ajustamento paramétrico linear da
 transformação utilizando o modelo matemático funcional fornecido e faça as análises.
 
-Ponto | Anomalia de altura vinculada ao DVBI (m) | Anomalia de altura do modelo de QG (m)
-1
-2
-3
-4
-5
+Ponto | Latitude em graus | Longitude em graus | Anomalia de altura vinculada ao DVBI (m) | Anomalia de altura do modelo de QG (m) | Diferença entre as anomalias de altura Δζ (m) 
+1 | -20,483897393 | -54,787597330 | 2,3430 |
+2 | -22,694238153 | -45,139754771 | -3,3861 |
+3 | -23,566572827 | -46,732584586 | -3,1835
+4 | -25,455528821 | -49,237430398 |
+5 | -25,448368569 | -49,230954809 |
+Média | -23,529721152 | -49,025664378 |
 
 MMF: Δζ = a₀ + a₁
 
