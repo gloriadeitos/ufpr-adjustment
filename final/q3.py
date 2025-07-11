@@ -12,6 +12,9 @@ Ponto B → X=110m, Y=105m, desviopadrao_x_B=0.03m, desviopadrao_y_B=0.04m
 Direção A-P → distancia_AP=12.50m, desviopadrao_distancia_AP=0.03m
 Direção B-P → distancia_AP=8.50m, desviopadrao_distancia_AP=0.03m
 
+Distância entre A-P → distancia_AP = 12.50m
+Distância entre B-P → distancia_BP = 8.50m
+
 Com os seus conhecimentos em geometria, e em propagação de erros, calcule as coordenadas do ponto P e suas respectivas precisões.
 
 Formulário:
