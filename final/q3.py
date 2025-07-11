@@ -26,4 +26,7 @@ MMF (Modelo Matemático Funcional):
 Xp = X? + D? * sin Az?
 Yp = Y? + D? * cos Az?
 
+OBS PELO GRAFICO:
+Xp teria que ser entre 104m a 106m (tem que ser mais proximo do 104m)
+Yp deveria ser entre 110m e 112m (mais perto do 112m)
 '''
