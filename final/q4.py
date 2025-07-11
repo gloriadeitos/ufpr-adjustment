@@ -4,15 +4,17 @@ foram utilizados. Nestes pontos foram calculadas as anomalias de altura referenc
 transformação utilizando o modelo matemático funcional fornecido e faça as análises.
 
 Ponto | Latitude em graus | Longitude em graus | Anomalia de altura vinculada ao DVBI (m) | Anomalia de altura do modelo de QG (m) | Diferença entre as anomalias de altura Δζ (m) 
-1 | -20,483897393 | -54,787597330 | 2,3430 |
-2 | -22,694238153 | -45,139754771 | -3,3861 |
-3 | -23,566572827 | -46,732584586 | -3,1835
-4 | -25,455528821 | -49,237430398 |
-5 | -25,448368569 | -49,230954809 |
+1 | -20,483897393 | -54,787597330 | 2,3430 | 2,2356 | -0,1074±0,001
+2 | -22,694238153 | -45,139754771 | -3,3861 | -3,6320 | -0,2459±0,030
+3 | -23,566572827 | -46,732584586 | -3,1835 | -3,4854 | -0,3018±0,076
+4 | -25,455528821 | -49,237430398 | 3,9435 | 3,5039 | -0,4396±0,0575
+5 | -25,448368569 | -49,230954809 | 3,9201 | 3,4933 | -0,4267±0,0440
 Média | -23,529721152 | -49,025664378 |
 
-MMF: Δζ = a₀ + a₁
+MMF: Δζ = a₀ + a₁(λj - λmedia) + a₂(φj - ϕmedia) cosλj
 
+Com λmedia e ϕmedia sendo a longitude e a latitude médias
+ 
 -------------------------------------------------------------------------
 Método paramétrico → La = F(Xa)
 Os valores observados ajustados podem ser expressos
