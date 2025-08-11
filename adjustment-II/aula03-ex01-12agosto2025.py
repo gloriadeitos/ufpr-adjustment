@@ -39,7 +39,6 @@ L = np.array([[9],
 
 # Calculando:
 # X = (A_transposta * A)^-1 * (A_transposta * L)
-
 X = np.linalg.inv(A.T @ A) @ A.T @ L
 
 """
