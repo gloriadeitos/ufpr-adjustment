@@ -10,3 +10,14 @@
 
 
 Esse repositório possui os código Python (.py) e Matlab (.m) realizados nas disciplinas **Ajustamento I e II** do curso de **Engenharia Cartográfica e de Agrimensura** da **UFPR**.
+
+# Uso de Notebook:
+
+#### Navegar para a pasta do notebook
+cd adjustment-II\prova01
+
+#### Exportar para HTML (funciona sempre)
+jupyter nbconvert --to html ajustamentoMMQ.ipynb
+
+#### Ou tentar exportar para PDF via playwright
+jupyter nbconvert --to webpdf ajustamentoMMQ.ipynb
