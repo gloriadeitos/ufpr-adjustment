@@ -1,0 +1,165 @@
+"""
+Na figura abaixo, as distâncias OA, AB, BC e Co foram observadas conforme tabela anexa, com MVC conhecida. Os ângulos mostrados na figura são assumidos constantes. Estimar as coordenadas de C por MMQ.
+
+Segmentos | Medidas (m)
+AO = l1 | 1000,20
+AB = l2 | 500,55
+BC = l3 | 707,75
+CO = l4 | 1118,60
+
+Σlb = [200 100 0 0] cm^2
+      [100 200 0 0]
+      [0 0 100 50]
+      [0 0 50 100]
+"""
+
+import numpy as np
+
+# Dados do problema
+Lb = np.array([1000.20, 500.55, 707.75, 1118.60])  # Valores observados
+Sigma_Lb = np.array([[200, 100, 0, 0],
+                     [100, 200, 0, 0],
+                     [0, 0, 100, 50],
+                     [0, 0, 50, 100]]) / 10000  # Convertendo para m²
+
+# Matriz peso (assumindo sigma0^2 = 1)
+P = np.linalg.inv(Sigma_Lb)
+
+# Valores iniciais para os parâmetros (coordenadas de C)
+# Considerando O na origem e geometria aproximada
+X0 = np.array([1000.0, 1000.0])  # [xC, yC]
+
+# Número de observações, equações e parâmetros
+n = 4  # observações
+r = 4  # equações
+u = 2  # parâmetros
+
+print("=== AJUSTAMENTO POR MÉTODO COMBINADO ===")
+print(f"Observações: {n}")
+print(f"Equações: {r}")
+print(f"Parâmetros: {u}")
+print(f"Graus de liberdade: {r - u}")
+
+# MODELO MATEMÁTICO:
+# As distâncias devem satisfazer:
+# f1 = sqrt(xC^2 + yC^2) - l4 = 0
+# f2 = sqrt((xC-1000)^2 + yC^2) - l3 = 0
+# f3 = sqrt((xC-1500)^2 + (yC-500)^2) - l2 = 0  
+# f4 = sqrt((xC-2000)^2 + (yC-1000)^2) - l1 = 0
+
+def calcular_matrizes(X, L):
+    """Calcula matrizes W, A e B"""
+    xC, yC = X
+    
+    # Vetor erro de fechamento W
+    W = np.zeros(4)
+    W[0] = np.sqrt(xC**2 + yC**2) - L[3]           # OC - l4
+    W[1] = np.sqrt((xC-1000)**2 + yC**2) - L[2]    # BC - l3
+    W[2] = np.sqrt((xC-1500)**2 + (yC-500)**2) - L[1]  # AB - l2
+    W[3] = np.sqrt((xC-2000)**2 + (yC-1000)**2) - L[0] # OA - l1
+    
+    # Matriz A = ∂F/∂X
+    A = np.zeros((4, 2))
+    
+    # Para f1 (OC)
+    denom1 = np.sqrt(xC**2 + yC**2)
+    A[0, 0] = xC/denom1 if denom1 != 0 else 0
+    A[0, 1] = yC/denom1 if denom1 != 0 else 0
+    
+    # Para f2 (BC)
+    denom2 = np.sqrt((xC-1000)**2 + yC**2)
+    A[1, 0] = (xC-1000)/denom2 if denom2 != 0 else 0
+    A[1, 1] = yC/denom2 if denom2 != 0 else 0
+    
+    # Para f3 (AB)
+    denom3 = np.sqrt((xC-1500)**2 + (yC-500)**2)
+    A[2, 0] = (xC-1500)/denom3 if denom3 != 0 else 0
+    A[2, 1] = (yC-500)/denom3 if denom3 != 0 else 0
+    
+    # Para f4 (OA)
+    denom4 = np.sqrt((xC-2000)**2 + (yC-1000)**2)
+    A[3, 0] = (xC-2000)/denom4 if denom4 != 0 else 0
+    A[3, 1] = (yC-1000)/denom4 if denom4 != 0 else 0
+    
+    # Matriz B = ∂F/∂L
+    B = np.zeros((4, 4))
+    B[0, 3] = -1  # ∂f1/∂l4
+    B[1, 2] = -1  # ∂f2/∂l3  
+    B[2, 1] = -1  # ∂f3/∂l2
+    B[3, 0] = -1  # ∂f4/∂l1
+    
+    return W, A, B
+
+# Ajustamento iterativo
+print("\n=== PROCESSO ITERATIVO ===")
+X = X0.copy()
+max_iter = 10
+tolerancia = 1e-6
+
+for iteracao in range(max_iter):
+    print(f"\n--- Iteração {iteracao + 1} ---")
+    print(f"X atual: {X}")
+    
+    W, A, B = calcular_matrizes(X, Lb)
+    print(f"W = {W}")
+    
+    # Matriz M
+    M = B @ np.linalg.inv(P) @ B.T
+    
+    # Vetor correções X
+    try:
+        X_correcao = -np.linalg.inv(A.T @ np.linalg.inv(M) @ A) @ A.T @ np.linalg.inv(M) @ W
+    except np.linalg.LinAlgError:
+        print("Matriz singular - usando pseudoinversa")
+        X_correcao = -np.linalg.pinv(A.T @ np.linalg.inv(M) @ A) @ A.T @ np.linalg.inv(M) @ W
+    
+    print(f"Correção X: {X_correcao}")
+    
+    # Atualizar parâmetros
+    X += X_correcao
+    
+    # Verificar convergência
+    if np.max(np.abs(X_correcao)) < tolerancia:
+        print(f"Convergência atingida na iteração {iteracao + 1}")
+        break
+
+print(f"\n=== RESULTADOS FINAIS ===")
+print(f"Coordenadas ajustadas de C:")
+print(f"xC = {X[0]:.3f} m")
+print(f"yC = {X[1]:.3f} m")
+
+# Cálculo final dos resíduos e estatísticas
+W_final, A_final, B_final = calcular_matrizes(X, Lb)
+M_final = B_final @ np.linalg.inv(P) @ B_final.T
+
+# Vetor dos multiplicadores de Lagrange
+K = -np.linalg.inv(M_final) @ (A_final @ (X - X0) + W_final)
+
+# Vetor resíduos
+V = np.linalg.inv(P) @ B_final.T @ K
+
+# Valores ajustados
+La = Lb + V
+
+# Variância a posteriori
+sigma0_2 = (V.T @ P @ V) / (r - u)
+
+# MVC dos parâmetros
+Sigma_X = sigma0_2 * np.linalg.inv(A_final.T @ np.linalg.inv(M_final) @ A_final)
+
+print(f"\n=== ESTATÍSTICAS ===")
+print(f"Resíduos V: {V}")
+print(f"Valores ajustados La: {La}")
+print(f"Variância a posteriori: {sigma0_2:.6f}")
+print(f"Desvio padrão a posteriori: {np.sqrt(sigma0_2):.6f} m")
+
+print(f"\nMatriz variância-covariância dos parâmetros:")
+print(Sigma_X)
+
+print(f"\nPrecisão das coordenadas:")
+print(f"σ_xC = {np.sqrt(Sigma_X[0,0]):.4f} m")
+print(f"σ_yC = {np.sqrt(Sigma_X[1,1]):.4f} m")
+
+# Resultado final
+print(f"\n=== COORDENADAS DE C ===")
+print(f"C = ({X[0]:.3f} ± {np.sqrt(Sigma_X[0,0]):.4f}, {X[1]:.3f} ± {np.sqrt(Sigma_X[1,1]):.4f}) m")
